@@ -1,3 +1,7 @@
+<script>
+    $("#menu_empresa").addClass("active");    
+</script>
+
 <br>
 <div class="container">
     <div class="row">
@@ -89,7 +93,7 @@
                             <center>
                                 <br>
                                 <button type="submit" class="btn btn-warning">Actualizar</button>
-                                <a name="" id="" class="btn btn-danger" href="#" role="button">Cancelar</a>
+                                <a name="" id="" class="btn btn-danger" href="<?php echo site_url("/empresas_controller/index") ?>" role="button">Cancelar</a>
 
 
                             </center>

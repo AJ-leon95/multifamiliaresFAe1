@@ -46,18 +46,9 @@ class veh_cho_model extends CI_Model {
         return $query->result();
     }
     public function obtener_chofer() {
-        $query = $this->db->query("SELECT c.*
-        FROM chofer c
-        LEFT JOIN veh_cho vc ON c.id_cho = vc.fk_vc_cho
-        LEFT JOIN vehiculos v ON vc.fk_vc_veh = v.id_veh
-        WHERE (c.estado_cho = 'ACTIVO') 
-        AND (vc.estatus_veh_cho = 'INACTIVO' OR vc.fk_vc_veh IS NULL)
-        AND c.id_cho NOT IN (
-            SELECT fk_vc_cho
-            FROM veh_cho
-            WHERE estatus_veh_cho = 'ACTIVO'
-        );
-        
+        $query = $this->db->query("SELECT *
+FROM chofer;
+
         ");
 
         return $query->result();

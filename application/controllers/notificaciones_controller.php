@@ -7,7 +7,11 @@ class notificaciones_controller extends CI_Controller
 
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct();      
+        $this->load->library('session');
+        if (!$this->session->userdata('conectado')) {
+            redirect('/vista_general/login'); 
+        }
         $this->load->model("empresa_model");
         $this->load->model("usuario_model");
         $this->load->model("notificacion_model");
@@ -26,6 +30,7 @@ class notificaciones_controller extends CI_Controller
             $this->load->view("administracion/footer");
         }
     }
+    
     public function reportes()
     {       
         if (

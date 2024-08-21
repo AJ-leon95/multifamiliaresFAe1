@@ -1,5 +1,5 @@
 <script>
-    $("#menu_veh_cho").addClass("active");
+    $("#asignacion").addClass("active");
 </script>
 <br><?php
     date_default_timezone_set('America/Guayaquil');

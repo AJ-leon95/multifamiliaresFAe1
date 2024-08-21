@@ -34,17 +34,27 @@
                             </div>
                         </div>
 
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="mb-3">
                                 <label for="cedula_cho" class="form-label">Cedula</label>
                                 <input type="number" class="form-control" name="cedula_cho" id="cedula_cho" aria-describedby="helpId" placeholder="ingrese su cedula" />
                                 <p style="color: red;"><?php echo form_error('cedula_cho') ?></p>
 
                             </div>
+                        </div> -->
+                        
+                        
+                        <div class="col-4">
+                            <div class="mb-3">
+                                <label for="telefono_cho" class="form-label">telefono</label>
+                                <input type="text" class="form-control" name="telefono_cho" id="telefono_cho" aria-describedby="helpId" placeholder="ingrese su numero celuular" />
+                                <p style="color: red;"><?php echo form_error('telefono_cho') ?></p>
+
+                            </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <!-- <div class="col-4">
                             <div class="mb-3">
                                 <label for="correo_cho" class="form-label">Correo</label>
                                 <input type="email" class="form-control" name="correo_cho" id="correo_cho" aria-describedby="helpId" placeholder="ingrese su correo" />
@@ -52,8 +62,8 @@
 
                             </div>
 
-                        </div>
-                        <div class="col-4">
+                        </div> -->
+                        <!-- <div class="col-4">
                             <div class="mb-3">
                                 <label for="contrasenia_cho" class="form-label">Contraseña</label>
                                 <div class="input-group">
@@ -67,15 +77,8 @@
                             </div>
 
 
-                        </div>
-                        <div class="col-4">
-                            <div class="mb-3">
-                                <label for="telefono_cho" class="form-label">telefono</label>
-                                <input type="text" class="form-control" name="telefono_cho" id="telefono_cho" aria-describedby="helpId" placeholder="ingrese su numero celuular" />
-                                <p style="color: red;"><?php echo form_error('telefono_cho') ?></p>
-
-                            </div>
-                        </div>
+                        </div> -->
+                        
 
                     </div>
                     <div class="row">
@@ -87,12 +90,12 @@
 
                             </div>
                             <div class="mb-3">
-                                <label for="experiencia_cho" class="form-label">Experiencia</label>
+                                <label for="experiencia_cho" class="form-label">Experiencia (opcional)</label>
                                 <textarea name="experiencia_cho" id="experiencia_cho" cols="30" rows="10"></textarea>
                                 <p style="color: red;"><?php echo form_error('experiencia_cho') ?></p>
 
                             </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <div class="mb-3">
                                     <label for="estado_cho" class="form-label">Estado</label>
                                     <select class="form-select form-select" name="estado_cho" id="estado_cho">
@@ -106,12 +109,12 @@
                                 </div>
 
 
-                            </div>
+                            </div> -->
                         
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
-                                <label for="foto_cho" class="form-label">foto (opcional)</label>
+                                <label for="foto_cho" class="form-label">Foto (opcional)</label>
                                 <input type="file" class="form-control" name="foto_cho" id="foto_cho" aria-describedby="helpId" placeholder="ingrese su foto_cho en formato png" />
                             </div>
 

@@ -1,5 +1,5 @@
 <script>
-    $("#menu_admin").addClass("active");
+    $("#asignacion").addClass("active");
 </script>
 <br>
 <?php if ($veh_cho) { ?>

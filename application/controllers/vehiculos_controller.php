@@ -4,11 +4,15 @@ class vehiculos_controller extends CI_Controller
 
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct();      
+        $this->load->library('session');
+        if (!$this->session->userdata('conectado')) {
+            redirect('/vista_general/login'); 
+        }
         $this->load->model("usuario_model");
         $this->load->model("vehiculo_model");
         $this->load->library("form_validation");
-        // $this->load->helper("/vehiculo_helper/reglas_vehiculo_helper");
+       
     }
     public function index()
     {
@@ -60,7 +64,7 @@ class vehiculos_controller extends CI_Controller
             $this->session->userdata("conectado")->perfil == "ADMINISTRADOR" ||
             $this->session->userdata("conectado")->perfil == "PRESIDENTE" ||
             $this->session->userdata("conectado")->perfil == "SECRETARIO" ||
-            $this->session->userdata("conectado")->perfil == "GERENTE"||
+            $this->session->userdata("conectado")->perfil == "GERENTE" ||
             $this->session->userdata("conectado")->perfil == "SOCIO"
         ) {
             // $data["usuario"] = $this->vehiculo_model->obtener_usuarios_sin_vehiculo();
@@ -77,7 +81,7 @@ class vehiculos_controller extends CI_Controller
             $this->session->userdata("conectado")->perfil == "PRESIDENTE" ||
             $this->session->userdata("conectado")->perfil == "SECRETARIO" ||
             $this->session->userdata("conectado")->perfil == "GERENTE" ||
-            $this->session->userdata("conectado")->perfil == "SOCIO"||
+            $this->session->userdata("conectado")->perfil == "SOCIO" ||
             $this->session->userdata("conectado")->perfil == "CLIENTE"
         ) {
             $data["vehUsuario"] = $this->vehiculo_model->obtenerDatos();
@@ -86,65 +90,71 @@ class vehiculos_controller extends CI_Controller
             $this->load->view("administracion/footer");
         }
     }
- 
-        public function reglasValidacion(){
-            $this->form_validation->set_rules(
-                'numero',
-                'Numero',
-                'required|is_unique[vehiculos.numero]',
-                array(
-                    'required' => 'Este campo es requerido.',
-                    'is_unique' => 'El numero ya esta registrado en la base de datos.'
-                ));
-            $this->form_validation->set_rules(
-                'marca_veh',
-                'Marca',
-                'required',
-                array(
-                    'required' => 'Este campo es requerido.',
-                ));
-            $this->form_validation->set_rules(
-                'anio_veh',
-                'Año Fabricacion',
-                'required',
-                array(
-                    'required' => 'Este campo es requerido.',
-                ));
-            $this->form_validation->set_rules(
-                'modelo_veh',
-                'Modelo',
-                'required',
-                array(
-                    'required' => 'Este campo es requerido.',
-                ));
-            $this->form_validation->set_rules(
-                'status_veh',
-                'Status',
-                'required',
-                array(
-                    'required' => 'Este campo es requerido.',
-                ));
-            $this->form_validation->set_rules(
-                'fk_veh_usu',
-                'Propietario',
-                'required',
-                array(
-                    'required' => 'Este campo es requerido.',
-                ));
-                $this->form_validation->set_rules(
-                    'placa_veh',
-                    'Placa',
-                    'required|regex_match[/^[A-Z]{3}-\d{3}$/]|is_unique[vehiculos.placa_veh]',
-                    array(
-                        'required' => 'Este campo es requerido.',
-                        'regex_match' => 'La placa debe tener el formato AAA-123.',
-                        'is_unique' => 'La paca ingresada ya esta registrada.'
-                    )
-                );
-                
-        }
 
-     
+    public function reglasValidacion()
+    {
+        $this->form_validation->set_rules(
+            'numero',
+            'Numero',
+            'required|is_unique[vehiculos.numero]',
+            array(
+                'required' => 'Este campo es requerido.',
+                'is_unique' => 'El numero ya esta registrado en la base de datos.'
+            )
+        );
+        $this->form_validation->set_rules(
+            'marca_veh',
+            'Marca',
+            'required',
+            array(
+                'required' => 'Este campo es requerido.',
+            )
+        );
+        $this->form_validation->set_rules(
+            'anio_veh',
+            'Año Fabricacion',
+            'required',
+            array(
+                'required' => 'Este campo es requerido.',
+            )
+        );
+        $this->form_validation->set_rules(
+            'modelo_veh',
+            'Modelo',
+            'required',
+            array(
+                'required' => 'Este campo es requerido.',
+            )
+        );
+        $this->form_validation->set_rules(
+            'status_veh',
+            'Status',
+            'required',
+            array(
+                'required' => 'Este campo es requerido.',
+            )
+        );
+        $this->form_validation->set_rules(
+            'fk_veh_usu',
+            'Propietario',
+            'required',
+            array(
+                'required' => 'Este campo es requerido.',
+            )
+        );
+        $this->form_validation->set_rules(
+            'placa_veh',
+            'Placa',
+            'required|regex_match[/^[A-Z]{3}-\d{4}$/]|is_unique[vehiculos.placa_veh]',
+            array(
+                'required' => 'Este campo es requerido.',
+                'regex_match' => 'La placa debe tener el formato AAA-1234.',
+                'is_unique' => 'La placa ingresada ya está registrada.'
+            )
+        );
+    }
+
+
     public function guardarVeiculo()
     {
         try {
@@ -159,10 +169,10 @@ class vehiculos_controller extends CI_Controller
                 // "foto" => $this->input->post("foto"),
 
             );
-           $this->reglasValidacion();
+            $this->reglasValidacion();
 
             if ($this->form_validation->run() == false) {
-            $this->nuevovehiculo();
+                $this->nuevovehiculo();
             } else {
                 $this->load->library("upload");
                 $new_name = "foto_Auto" . time() . "_" . rand(1, 5000);

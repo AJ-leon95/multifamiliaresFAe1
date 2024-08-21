@@ -1,4 +1,6 @@
-<!-- Main content -->
+<script>
+    $("#reporteNotificaciones").addClass("active");
+</script>
 <br>
 <?php if ($notificacion) { ?>
     <section class="content">

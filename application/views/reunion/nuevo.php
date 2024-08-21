@@ -1,5 +1,5 @@
 <script>
-    $("#menu_notificacion").addClass("active");
+    $("#reunion").addClass("active");
 </script>
 <br><?php
     date_default_timezone_set('America/Guayaquil');

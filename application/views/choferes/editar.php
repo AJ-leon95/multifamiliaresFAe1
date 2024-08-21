@@ -37,46 +37,16 @@
 
                         <div class="col-4">
                             <div class="mb-3">
-                                <label for="cedula_cho" class="form-label">Cedula</label>
-                                <p style="color: red;"><?php echo form_error('cedula_cho') ?></p>
-                                <input value="<?php echo $editarChofer->cedula_cho ?>" type="number" class="form-control" name="cedula_cho" id="cedula_cho" aria-describedby="helpId" placeholder="ingrese su cedula" />
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="mb-3">
-                                <label for="correo_cho" class="form-label">Correo</label>
-                                <p style="color: red;"><?php echo form_error('correo_cho') ?></p>
-                                <input value="<?php echo $editarChofer->correo_cho ?>" type="email" class="form-control" name="correo_cho" id="correo_cho" aria-describedby="helpId" placeholder="ingrese su correo" />
-
-                            </div>
-
-                        </div>
-                        <div class="col-4">
-                            <div class="mb-3">
-                                <label for="contrasenia_cho" class="form-label">Contraseña</label>
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
-                                        <input value="<?php echo $editarChofer->contrasenia_cho ?>" type="password" class="form-control" name="contrasenia_cho" id="contrasenia_cho" aria-describedby="helpId" placeholder="Ingrese su contraseña mínimo 8 caracteres" />
-                                        <i class="bi bi-eye"></i>
-                                    </button>
-                                    <p style="color: red;"><?php echo form_error('contrasenia_cho') ?></p>
-
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class="col-4">
-                            <div class="mb-3">
                                 <label for="telefono_cho" class="form-label">telefono</label>
                                 <p style="color: red;"><?php echo form_error('telefono_cho') ?></p>
                                 <input value="<?php echo $editarChofer->telefono_cho ?>" type="text" class="form-control" name="telefono_cho" id="telefono_cho" aria-describedby="helpId" placeholder="ingrese su numero celuular" />
 
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                    
+                      
 
                     </div>
                     <div class="row">
@@ -93,21 +63,7 @@
                                 <textarea name="experiencia_cho" id="experiencia_cho" cols="30" rows="10"> <?php echo $editarChofer->experiencia_cho ?></textarea>
 
                             </div>
-                            <div class="mb-3">
-                                <div class="mb-3">
-                                    <label for="estado_cho" class="form-label">Estado</label>
-                                    <select class="form-select form-select" name="estado_cho" id="estado_cho">
-                                        <option value="<?php echo $editarChofer->estado_cho ?>" selected> <?php echo $editarChofer->estado_cho ?></option>
-                                        <option value="ACTIVO">ACTIVO</option>
-                                        <option value="INACTIVO">INACTIVO</option>
-
-                                    </select>
-                                    <p style="color: red;"><?php echo form_error('estado_cho') ?></p>
-
-                                </div>
-
-
-                            </div>
+                          
                         
                         </div>
                         <div class="col-6">

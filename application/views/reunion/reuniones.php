@@ -1,46 +1,21 @@
 <br>
+<script>
+    $("#horarioReuniones").addClass("active");
+</script>
 <?php if ($reunion) { ?>
     <section class="content">
         <div class="container-fluid">
+            <center>
+                <h1>HORARIO DE REUNIONES</h1>
+            </center>
             <div class="row">
-                <div class="col-md-3">
-                    <div class="sticky-top mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Lista de reuniones creadas anteriormente</h4>
-                            </div>
-                            <?php $contador = 1;
-                            foreach ($reunion as $registro) { ?>
-                                <div class="card-body">
-                                    <!-- the events -->
-                                    <div id="external-events">
-                                        <div class="card card-light card-outline">
-                                            <div class="card-header">
-                                                <h5 class="card-title">Fecha: <?php echo $registro->fecha_reu . " Hora:" . $registro->hora_reu ?></h5>
-                                                <h6 href="#" class="btn btn-tool btn-block">Reunión #<?php echo $contador ?></h6>
-                                                <div class="card-tools">
 
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <p>
-                                                    <?php echo " Asunto a tratar: ". $registro->asunto_reu ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php $contador++;
-                            } ?>
-                        </div>
-                    </div>
-                </div>
                 <!-- /.card-body -->
 
 
 
                 <!-- /.col -->
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-body p-0">
                             <!-- THE CALENDAR -->
@@ -52,149 +27,188 @@
                 </div>
                 <!-- /.col -->
             </div>
-            <!-- /.row -->
+
         </div><!-- /.container-fluid -->
     </section>
-<?php } else {
-    echo "NO HAY REUNIONES";
-} ?>
+<?php } else { ?>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
 
-<!-- Page specific script -->
+            <!-- Timelime example  -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- The time line -->
+                    <div class="timeline">
+                        <!-- timeline time label -->
+
+                        <!-- /.timeline-label -->
+                        <!-- timeline item -->
+
+                        <!-- END timeline item -->
+                        <!-- timeline item -->
+
+                        <!-- END timeline item -->
+                        <!-- timeline item -->
+                        <div>
+                            <i class="fas fa-comments bg-yellow"></i>
+                            <div class="timeline-item">
+                                <span class="time"><i class="fas fa-clock"></i> <?php echo date('H:i:s')  ?></span>
+                                <h3 class="timeline-header"> Reuniones </h3>
+                                <div class="timeline-body">
+                                    Buenas estiamdo soci@ <?php $usuario = $this->session->userdata("conectado")->nombres;
+                                                            echo $usuario;
+                                                            ?> por el momento no hay ninguna reunion agendada.
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+        </div>
+        <!-- /.timeline -->
+
+    </section>
+    <!-- /.content -->
+<?php } ?>
 <script>
-    $(function() {
-
-        /* initialize the external events
-         -----------------------------------------------------------------*/
-        function ini_events(ele) {
-            ele.each(function() {
-
-                // create an Event Object (https://fullcalendar.io/docs/event-object)
-                // it doesn't need to have a start or end
-
-                var eventObject = {
-                    title: $.trim($(this).text()) // use the element's text as the event title
-                }
-
-                // store the Event Object in the DOM element so we can get to it later
-                $(this).data('eventObject', eventObject)
-
-                // make the event draggable using jQuery UI
-                $(this).draggable({
-                    zIndex: 1070,
-                    revert: true, // will cause the event to go back to its
-                    revertDuration: 0 //  original position after the drag
-                })
-
-            })
-        }
-
-        ini_events($('#external-events div.external-event'))
-
-        /* initialize the calendar
-         -----------------------------------------------------------------*/
-        //Date for the calendar events (dummy data)
-        var date = new Date()
-        var d = date.getDate(),
-            m = date.getMonth(),
-            y = date.getFullYear()
-
-        var Calendar = FullCalendar.Calendar;
-        var Draggable = FullCalendar.Draggable;
-
-        var containerEl = document.getElementById('external-events');
-        var checkbox = document.getElementById('drop-remove');
+    $(document).ready(function() {
         var calendarEl = document.getElementById('calendar');
 
-        // initialize the external events
-        // -----------------------------------------------------------------
-
-        new Draggable(containerEl, {
-            itemSelector: '.external-event',
-            eventData: function(eventEl) {
-                return {
-                    title: eventEl.innerText,
-                    backgroundColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
-                    borderColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
-                    textColor: window.getComputedStyle(eventEl, null).getPropertyValue('color'),
-                };
-            }
-        });
-
-        var calendar = new Calendar(calendarEl, {
+        var calendar = new FullCalendar.Calendar(calendarEl, {
             headerToolbar: {
-                left: 'prev,next,today',
+                left: 'prev,next today',
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-           
-            initialDate: new Date(), // Establece la fecha de inicio como la fecha actual
-            locale: 'es', // Establece el idioma en español
-            themeSystem: 'bootstrap',
-           
-            //Random default events
-            events: [
-
-                <?php foreach ($reunion as $registro) { ?> {
-                        title: '<?php echo $registro->asunto_reu ?>',
-                        start: '<?php echo $registro->fecha_reu ?>', // Utiliza la fecha de inicio de la reunión proporcionada por PHP
-                        backgroundColor: '#FFD733', // Rojo
-                        borderColor: '#000000', // Rojo
-                        allDay: true // Indica que el evento dura todo el día
-                    },
-                <?php } ?>
-
-
-            ],
+            locale: 'es',
+            buttonText: {
+                today: 'Hoy',
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                prev: 'Anterior',
+                next: 'Siguiente'
+            },
+            initialView: 'dayGridMonth',
+            titleFormat: {
+                year: 'numeric',
+                month: 'long'
+            },
             editable: true,
-            droppable: true, // this allows things to be dropped onto the calendar !!!
-            drop: function(info) {
-                // is the "remove after drop" checkbox checked?
-                if (checkbox.checked) {
-                    // if so, remove the element from the "Draggable Events" list
-                    info.draggedEl.parentNode.removeChild(info.draggedEl);
-                }
+            firstDay: 1,
+            selectable: true,
+            allDaySlot: false,
+            events: function(fetchInfo, successCallback, failureCallback) {
+                $.ajax({
+                    url: '<?php echo site_url("/reuniones_controller/obtenerEventosModales") ?>', // URL del método en el controlador
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var events = [];
+                        $.each(data, function(i, registro) {
+                            events.push({
+                                title: registro.lugar_reu,
+                                start: registro.fecha_reu,
+                                allDay: true,
+                                backgroundColor: '#FFD733',
+                                borderColor: '#000000',
+                                extendedProps: {
+                                    hora: registro.hora_reu,
+                                    asunto: registro.asunto_reu,
+                                    punto1: registro.punto1,
+                                    punto2: registro.punto2,
+                                    punto3: registro.punto3,
+                                    punto4: registro.punto4,
+                                    punto5: registro.punto5,
+                                    punto6: registro.punto6,
+                                    punto7: registro.punto7,
+                                }
+                            });
+                        });
+                        successCallback(events);
+                    },
+                    error: function() {
+                        failureCallback('Error al cargar los eventos.');
+                    }
+                });
+            },
+            eventClick: function(info) {
+                // Mostrar los detalles del evento en una ventana modal
+                $('#eventPlace').text(info.event.title);
+                $('#eventDescription').text(info.event.extendedProps.hora);
+                $('#asunto').text(info.event.extendedProps.asunto);
+                $('#punto1').text(info.event.extendedProps.punto1);
+                $('#punto2').text(info.event.extendedProps.punto2);
+                $('#punto3').text(info.event.extendedProps.punto3);
+                $('#punto4').text(info.event.extendedProps.punto4);
+                $('#punto5').text(info.event.extendedProps.punto5);
+                $('#punto6').text(info.event.extendedProps.punto6);
+                $('#punto7').text(info.event.extendedProps.punto7);
+
+                var myModal = new bootstrap.Modal(document.getElementById('eventDetailsModal'));
+                myModal.show();
             }
         });
 
         calendar.render();
-        // $('#calendar').fullCalendar()
-
-        /* ADDING EVENTS */
-        var currColor = '#000000' //Red by default
-        // Color chooser button
-        $('#color-chooser > li > a').click(function(e) {
-            e.preventDefault()
-            // Save color
-            currColor = $(this).css('color')
-            // Add color effect to button
-            $('#add-new-event').css({
-                'background-color': currColor,
-                'border-color': currColor
-            })
-        })
-        $('#add-new-event').click(function(e) {
-            e.preventDefault()
-            // Get value and make sure it is not null
-            var val = $('#new-event').val()
-            if (val.length == 0) {
-                return
-            }
-
-            // Create events
-            var event = $('<div />')
-            event.css({
-                'background-color': currColor,
-                'border-color': currColor,
-                'color': '#000000'
-            }).addClass('external-event')
-            event.text(val)
-            $('#external-events').prepend(event)
-
-            // Add draggable funtionality
-            ini_events(event)
-
-            // Remove event from text input
-            $('#new-event').val('')
-        })
-    })
+    });
 </script>
+
+<!-- Modal -->
+<div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #FFD733; color: #000000;">
+                <h5 class="modal-title" id="eventDetailsModalLabel">Detalles del Evento</h5>
+            </div>
+            <div class="modal-body">
+                <p><strong>Lugar:</strong> <span id="eventPlace"></span></p>
+                <p><strong>Hora:</strong> <span id="eventDescription"></span></p>
+                <p><strong>Asunto:</strong> <span id="asunto"></span></p>
+                <p><strong>Punto 1:</strong> <span id="punto1"></span></p>
+                <p><strong>Punto 2:</strong> <span id="punto2"></span></p>
+                <p><strong>Punto 3:</strong> <span id="punto3"></span></p>
+                <p><strong>Punto 4:</strong> <span id="punto4"></span></p>
+                <p><strong>Punto 5:</strong> <span id="punto5"></span></p>
+                <p><strong>Punto 6:</strong> <span id="punto6"></span></p>
+                <p><strong>Punto 7:</strong> <span id="punto7"></span></p>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estilos adicionales para el modal -->
+<style>
+    .modal-content {
+        border-radius: 8px;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .modal-body p {
+        margin-bottom: 10px;
+        font-size: 1.1em;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #ddd;
+    }
+
+    .btn-close {
+        filter: invert(1);
+    }
+
+    .fc-toolbar-title {
+        text-transform: uppercase;
+        /* Transforma el texto a mayúsculas */
+    }
+</style>

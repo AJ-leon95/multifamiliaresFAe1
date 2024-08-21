@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Encomienda</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
-</head>
-<body>
 <script>
     $("#menu_car_enc").addClass("active");
 </script>
@@ -19,9 +9,9 @@
                 <h3 class="card-title">Editar Encomienda</h3>
             </div>
             <div class="card-body">
-                <form action="<?php echo site_url("/carerras_encomiendas_controller/Actualizar") ?>" method="post" enctype="multipart/form-data">
+                <form action="<?php echo site_url('/carerras_encomiendas_controller/Actualizar') ?>" method="post" enctype="multipart/form-data">
                     <div class="row">
-                    <input hidden value="<?php echo $carrera->id_car ?>" type="text" class="form-control" name="id_car" id="id_car" aria-describedby="helpId" placeholder="" />
+                        <input hidden value="<?php echo $carrera->id_car ?>" type="text" class="form-control" name="id_car" id="id_car" aria-describedby="helpId" placeholder="" />
                         <!-- Formulario de Fecha y Hora -->
                         <div class="col-6">
                             <div class="mb-3">
@@ -57,7 +47,7 @@
                             <input hidden value="ENCOMIENDA" type="text" class="form-control" name="tipo_ce" id="tipo_ce" aria-describedby="helpId" placeholder="" />
                             <input hidden value="POR ACEPTAR" type="text" class="form-control" name="estadoCarrera" id="estadoCarrera" aria-describedby="helpId" placeholder="" />
                             <input id="searchBox" type="text" class="form-control" aria-describedby="helpId" placeholder="Busca el lugar" />
-                            <label for="" class="form-label">Escoja la ubicacion inicial de la carrera</label>
+                            <label for="" class="form-label">Escoja la ubicación inicial de la carrera</label>
                             <div id="mapaCarrera" style="width:100%; height:250px; border:2px solid black;" class="col-12"></div>
                             <button type="button" class="btn btn-dark col-6" onclick="obtenerUbicacionActual()">Obtener Ubicación Actual</button>
                             <p style="color: red;"><?php echo form_error('latitud_carrera') ?></p>
@@ -68,31 +58,44 @@
                             <input hidden value="<?php echo $carrera->latitud_entrega ?>" type="text" class="form-control" name="latitud_entrega" id="latitud_entrega" aria-describedby="helpId" placeholder="" />
                             <input hidden value="<?php echo $carrera->longitud_entrega ?>" type="text" class="form-control" name="longitud_entrega" id="longitud_entrega" aria-describedby="helpId" placeholder="" />
                             <input id="searchBoxFin" type="text" class="form-control" aria-describedby="helpId" placeholder="Busca el lugar" />
-                            <label for="" class="form-label">Escoja la ubicacion del destino de la carrera</label>
+                            <label for="" class="form-label">Escoja la ubicación del destino de la carrera</label>
                             <div id="mapaFin" style="width:100%; height:250px; border:2px solid black;" class="col-12"></div>
+                            <button type="button" class="btn btn-dark col-6" onclick="obtenerUbicacionActualFin()">Obtener Ubicación Actual de Entrega</button>
                             <p style="color: red;"><?php echo form_error('latitud_entrega') ?></p>
                             <p style="color: red;"><?php echo form_error('longitud_entrega') ?></p>
                         </div>
                     </div>
 
-                    <!-- Descripción y Vehículo -->
+                    <!-- Descripción, Vehículo y Precio -->
                     <div class="row">
                         <div class="col-6">
                             <div class="mb-6">
-                                <label for="descripcion_encomienda" class="form-label">Ingrese la descripcion de la encomienda</label>
+                                <label for="descripcion_encomienda" class="form-label">Ingrese la descripción de la encomienda</label>
                                 <textarea name="descripcion_encomienda" id="descripcion_encomienda" cols="30" rows="10"><?php echo $carrera->descripcion_encomienda ?></textarea>
                                 <p style="color: red;"><?php echo form_error('descripcion_encomienda') ?></p>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="mb-6">
-                                <label for="fk_car_veh" class="form-label">Escoja un nuevo vehiculo si desea</label>
+                                <label for="fk_car_veh" class="form-label">Escoja un nuevo vehículo si desea</label>
                                 <select class="form-select form-select" name="fk_car_veh" id="fk_car_veh">
                                     <option value="<?php echo $carrera->fk_car_veh ?>" selected><?php echo "Placa: " . $carrera->placa_veh ?></option>
                                     <?php foreach ($vehiculo as $registro) { ?>
                                         <option value="<?php echo $registro->id_veh ?>"><?php echo "Placa: " . $registro->placa_veh . " Propietario: " . $registro->nombres . " " . $registro->apellidos ?></option>
                                     <?php } ?>
                                 </select>
+                            </div>
+                            <div class="mb-3">
+                              <!-- Mostrar Distancia y Precio Calculado -->
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <p id="mostrar_distancia">Distancia anterior: <?php echo $carrera->precio_carrera ?> - km</p>
+                                        <p id="mostrar_precio">Precio anterior:   $ <?php echo $carrera->distancia ?></p>
+                                    </div>
+                                </div>
+                                <!-- Inputs ocultos para enviar distancia y precio calculados -->
+                                <input type="hidden" id="input_distancia" name="distancia" value="">
+                                <input type="hidden" id="input_precio" name="precio" value="">
                             </div>
                         </div>
                     </div>
@@ -101,7 +104,7 @@
                     <div class="row">
                         <center>
                             <br>
-                            <button type="submit" class="btn btn-warning">Guardar</button>
+                            <button type="submit" class="btn btn-warning">Actualizar</button>
                             <a name="" id="" class="btn btn-danger" href="<?php echo site_url("/vehiculos_controller/reporteVehiculos") ?>" role="button">Cancelar</a>
                         </center>
                     </div>
@@ -110,8 +113,9 @@
         </div>
     </div>
 </div>
-
 <script>
+    $("#menu_car_enc").addClass("active");
+
     ClassicEditor
         .create(document.querySelector('#descripcion_encomienda'))
         .then(editor => {
@@ -121,38 +125,34 @@
             console.error(error);
         });
 
-    var mapaCarrera, marcador, searchBox;
-    var mapaFin, marcadorFin, searchBoxFin;
-
     function initMap() {
-        // Coordenadas iniciales para la ubicación de la carrera
-        var latitudCarrera = parseFloat(document.getElementById('latitud_carrera').value);
-        var longitudCarrera = parseFloat(document.getElementById('longitud_carrera').value);
-        var cordenadaInicial = new google.maps.LatLng(latitudCarrera, longitudCarrera);
+        var latCarrera = parseFloat(document.getElementById('latitud_carrera').value) || -1.831239;
+        var lngCarrera = parseFloat(document.getElementById('longitud_carrera').value) || -78.183406;
+        var latEntrega = parseFloat(document.getElementById('latitud_entrega').value) || -1.831239;
+        var lngEntrega = parseFloat(document.getElementById('longitud_entrega').value) || -78.183406;
 
-        // Inicializar primer mapa
-        mapaCarrera = new google.maps.Map(document.getElementById('mapaCarrera'), {
-            center: cordenadaInicial,
-            zoom: 12,
+        // Inicializar el mapa de Carrera
+        var mapaCarrera = new google.maps.Map(document.getElementById('mapaCarrera'), {
+            center: { lat: latCarrera, lng: lngCarrera },
+            zoom: 14,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
-        marcador = new google.maps.Marker({
-            position: cordenadaInicial,
+        var marcador = new google.maps.Marker({
             map: mapaCarrera,
-            title: "Seleccione la dirección",
             draggable: true,
+            position: { lat: latCarrera, lng: lngCarrera },
             icon: "<?php echo base_url('/assets/img/ubicacionNegro.png') ?>"
         });
 
         google.maps.event.addListener(marcador, 'dragend', function() {
-            document.getElementById('latitud_carrera').value = this.getPosition().lat();
-            document.getElementById('longitud_carrera').value = this.getPosition().lng();
+            document.getElementById('latitud_carrera').value = marcador.getPosition().lat();
+            document.getElementById('longitud_carrera').value = marcador.getPosition().lng();
+            calcularYMostrarPrecio();
         });
 
-        var input = document.getElementById('searchBox');
-        searchBox = new google.maps.places.SearchBox(input);
-        mapaCarrera.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        var searchBox = new google.maps.places.SearchBox(document.getElementById('searchBox'));
+        mapaCarrera.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('searchBox'));
 
         searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
@@ -175,36 +175,31 @@
                 }
             });
             mapaCarrera.fitBounds(bounds);
+            calcularYMostrarPrecio();
         });
 
-        // Coordenadas iniciales para la ubicación de entrega
-        var latitudEntrega = parseFloat(document.getElementById('latitud_entrega').value);
-        var longitudEntrega = parseFloat(document.getElementById('longitud_entrega').value);
-        var cordenadaFinal = new google.maps.LatLng(latitudEntrega, longitudEntrega);
-
-        // Inicializar segundo mapa
-        mapaFin = new google.maps.Map(document.getElementById('mapaFin'), {
-            center: cordenadaFinal,
-            zoom: 12,
+        // Inicializar el mapa de Entrega
+        var mapaFin = new google.maps.Map(document.getElementById('mapaFin'), {
+            center: { lat: latEntrega, lng: lngEntrega },
+            zoom: 14,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
-        marcadorFin = new google.maps.Marker({
-            position: cordenadaFinal,
+        var marcadorFin = new google.maps.Marker({
             map: mapaFin,
-            title: "Seleccione la dirección de entrega",
             draggable: true,
+            position: { lat: latEntrega, lng: lngEntrega },
             icon: "<?php echo base_url('/assets/img/ubicacionNegro.png') ?>"
         });
 
         google.maps.event.addListener(marcadorFin, 'dragend', function() {
-            document.getElementById('latitud_entrega').value = this.getPosition().lat();
-            document.getElementById('longitud_entrega').value = this.getPosition().lng();
+            document.getElementById('latitud_entrega').value = marcadorFin.getPosition().lat();
+            document.getElementById('longitud_entrega').value = marcadorFin.getPosition().lng();
+            calcularYMostrarPrecio();
         });
 
-        var inputFin = document.getElementById('searchBoxFin');
-        searchBoxFin = new google.maps.places.SearchBox(inputFin);
-        mapaFin.controls[google.maps.ControlPosition.TOP_LEFT].push(inputFin);
+        var searchBoxFin = new google.maps.places.SearchBox(document.getElementById('searchBoxFin'));
+        mapaFin.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('searchBoxFin'));
 
         searchBoxFin.addListener('places_changed', function() {
             var places = searchBoxFin.getPlaces();
@@ -227,44 +222,59 @@
                 }
             });
             mapaFin.fitBounds(bounds);
+            calcularYMostrarPrecio();
         });
     }
 
-    function obtenerUbicacionActual() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var currentPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                mapaCarrera.setCenter(currentPos);
-                marcador.setPosition(currentPos);
-                document.getElementById('latitud_carrera').value = position.coords.latitude;
-                document.getElementById('longitud_carrera').value = position.coords.longitude;
-                alert('Ubicación actual seleccionada:\nLatitud: ' + position.coords.latitude + '\nLongitud: ' + position.coords.longitude);
-            }, function() {
-                alert('Error al obtener la ubicación actual.');
-            });
-        } else {
-            alert('Geolocalización no es soportada por este navegador.');
-        }
+    function calcularDistancia(lat1, lng1, lat2, lng2) {
+        var R = 6371; // Radio de la tierra en km
+        var dLat = (lat2 - lat1) * (Math.PI / 180);
+        var dLng = (lng2 - lng1) * (Math.PI / 180);
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+            Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        var distancia = R * c; // Distancia en km
+        return distancia;
     }
 
-    function obtenerUbicacionActualFin() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var currentPos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                mapaFin.setCenter(currentPos);
-                marcadorFin.setPosition(currentPos);
-                document.getElementById('latitud_entrega').value = position.coords.latitude;
-                document.getElementById('longitud_entrega').value = position.coords.longitude;
-                alert('Ubicación de entrega actual seleccionada:\nLatitud: ' + position.coords.latitude + '\nLongitud: ' + position.coords.longitude);
-            }, function() {
-                alert('Error al obtener la ubicación de entrega actual.');
-            });
-        } else {
-            alert('Geolocalización no es soportada por este navegador.');
+    function calcularYMostrarPrecio() {
+        var lat1 = parseFloat(document.getElementById('latitud_carrera').value);
+        var lng1 = parseFloat(document.getElementById('longitud_carrera').value);
+        var lat2 = parseFloat(document.getElementById('latitud_entrega').value);
+        var lng2 = parseFloat(document.getElementById('longitud_entrega').value);
+
+        if (isNaN(lat1) || isNaN(lng1) || isNaN(lat2) || isNaN(lng2)) {
+            return;
         }
+
+        var distancia = calcularDistancia(lat1, lng1, lat2, lng2);
+        document.getElementById('distancia').value = distancia.toFixed(2);
+
+        $.ajax({
+            url: '<?php echo site_url('carerras_encomiendas_controller/obtenerPrecioPorDistancia'); ?>',
+            type: 'POST',
+            data: { distancia: distancia },
+            dataType: 'json',
+            success: function(response) {
+                if (response.error) {
+                    document.getElementById('precio_carrera').value = 'No se encontró una tarifa para la distancia calculada.';
+                } else {
+                    var tarifa = response.tarifa.toFixed(2);
+                    document.getElementById('precio_carrera').value = tarifa;
+                    document.getElementById('mostrar_distancia').innerText = `Distancia: ${distancia.toFixed(2)} km`;
+                    document.getElementById('mostrar_precio').innerText = `Precio: $${tarifa}`;
+                    document.getElementById('input_distancia').value = distancia.toFixed(2);
+                    document.getElementById('input_precio').value = tarifa;
+                }
+            },
+            error: function() {
+                console.error('Error al obtener la tarifa.');
+            }
+        });
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        initMap();
+    });
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUpcfQp9kDxjlCkT8ASzbF5gybmzhvd8U&libraries=places&callback=initMap"></script>
-
-</body>
-</html>

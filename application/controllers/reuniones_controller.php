@@ -4,7 +4,11 @@ class reuniones_controller extends CI_Controller
 
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct();      
+        $this->load->library('session');
+        if (!$this->session->userdata('conectado')) {
+            redirect('/vista_general/login'); 
+        }
         $this->load->model("empresa_model");
         $this->load->model("reunion_model");
     }
@@ -128,5 +132,26 @@ class reuniones_controller extends CI_Controller
             echo "no se pudo actualizar";
         }
         redirect("reuniones_controller/index");
+    }
+    public function obtenerEventosModales() {
+        
+        if (
+            $this->session->userdata("conectado")->perfil == "ADMINISTRADOR" ||
+            $this->session->userdata("conectado")->perfil == "PRESIDENTE" ||
+            $this->session->userdata("conectado")->perfil == "SECRETARIO" ||
+            $this->session->userdata("conectado")->perfil == "GERENTE" ||
+            $this->session->userdata("conectado")->perfil == "SOCIO"
+        ) {
+            $datos = $this->reunion_model->obtenerDatos();
+    
+            if ($datos) {
+                echo json_encode($datos);
+            } else {
+                echo json_encode([]);
+            }
+        } else {
+            
+            echo json_encode(['error' => 'Acceso no autorizado']);
+        }
     }
 }

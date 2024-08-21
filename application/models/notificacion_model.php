@@ -23,6 +23,7 @@ class notificacion_model extends CI_Model {
     }
     public function obtenerRegistro($id_not){
         $this->db->join("usuarios","notificaciones.fk_not_usu = usuarios.id_usu");
+        $this->db->join("empresas","usuarios.fk_usu_emp = empresas.id_emp");
         $this->db->where("id_not",$id_not);
         $usuario= $this->db->get("notificaciones");
         if($usuario->num_rows() > 0){

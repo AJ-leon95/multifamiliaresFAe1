@@ -1,10 +1,18 @@
 <?php
+date_default_timezone_set('America/Guayaquil');
+?>
+
+<?php
 class veh_cho_controller extends CI_Controller
 {
 
     public function __construct()
-    {
-        parent::__construct();
+    { 
+        parent::__construct();      
+        $this->load->library('session');
+        if (!$this->session->userdata('conectado')) {
+            redirect('/vista_general/login'); 
+        }
         $this->load->model("chofer_model");
         $this->load->model("vehiculo_model");
         $this->load->model("veh_cho_model");
@@ -61,53 +69,68 @@ class veh_cho_controller extends CI_Controller
         }
     }
 
-    public function validacion(){
+    public function validacion() {
+        // Validación para la fecha de inicio
         $this->form_validation->set_rules(
             'fecha_inicio',
             'Fecha Inicio',
-            'required',//|is_unique[usuarios.correo]
+            'required|callback_fecha_inicio_check', // Callback para verificar la fecha de inicio
             array(
                 'required' => 'Este campo es requerido.',
-                
             )
         );
+    
+        // Validación para la fecha de fin
         $this->form_validation->set_rules(
             'fecha_fin',
             'Fecha Fin',
-            'required',//|is_unique[usuarios.correo]
+            'required|callback_fecha_fin_check', // Callback para verificar la fecha de fin
             array(
                 'required' => 'Este campo es requerido.',
-                
             )
         );
+    
+        // Validación para el vehículo
         $this->form_validation->set_rules(
             'fk_vc_veh',
-            'vehiculo',
-            'required',//|is_unique[usuarios.correo]
+            'Vehículo',
+            'required',
             array(
                 'required' => 'Este campo es requerido.',
-                
             )
         );
+    
+        // Validación para el chofer
         $this->form_validation->set_rules(
             'fk_vc_cho',
             'Chofer',
-            'required',//|is_unique[usuarios.correo]
+            'required',
             array(
                 'required' => 'Este campo es requerido.',
-                
-            )
-        );
-        $this->form_validation->set_rules(
-            'estatus_veh_cho',
-            'Status',
-            'required',//|is_unique[usuarios.correo]
-            array(
-                'required' => 'Este campo es requerido.',
-                
             )
         );
     }
+    
+    // Callback para verificar que la fecha de inicio no sea anterior a la actual
+    public function fecha_inicio_check($fecha_inicio) {
+        $fecha_actual = date('Y-m-d');
+        if ($fecha_inicio < $fecha_actual) {
+            $this->form_validation->set_message('fecha_inicio_check', 'La fecha de inicio no puede ser anterior a la fecha actual.');
+            return FALSE;
+        }
+        return TRUE;
+    }
+    
+    // Callback para verificar que la fecha de fin no sea la misma que la fecha de inicio
+    public function fecha_fin_check($fecha_fin) {
+        $fecha_inicio = $this->input->post('fecha_inicio');
+        if ($fecha_fin == $fecha_inicio) {
+            $this->form_validation->set_message('fecha_fin_check', 'La fecha de fin no puede ser la misma que la fecha de inicio.');
+            return FALSE;
+        }
+        return TRUE;
+    }
+    
     public function guardar(){
         $datos=array(
             "fecha_inicio"=> $this->input->post("fecha_inicio"),

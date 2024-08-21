@@ -26,7 +26,8 @@ class ubicacion_vehiculo_model extends CI_Model
         uv.latitud_ubi, 
         uv.longitud_ubi, 
         uv.fecha_ubi, 
-        uv.hora_ubi 
+        uv.hora_ubi,
+        v.estado
     FROM 
         usuarios u 
     JOIN 

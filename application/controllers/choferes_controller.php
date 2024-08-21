@@ -4,7 +4,12 @@ class choferes_controller extends CI_Controller
 
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct();      
+        $this->load->library('session');
+        if (!$this->session->userdata('conectado')) {
+            redirect('/vista_general/login'); 
+        }
+        
         $this->load->model("chofer_model");
         $this->load->library("form_validation");
     }
@@ -12,6 +17,7 @@ class choferes_controller extends CI_Controller
 
     public function index()
     {
+
         if (
             $this->session->userdata("conectado")->perfil == "ADMINISTRADOR" ||
             $this->session->userdata("conectado")->perfil == "PRESIDENTE" ||
@@ -54,22 +60,8 @@ class choferes_controller extends CI_Controller
     }
     public function reglasValidacionEditar()
     {
-        $this->form_validation->set_rules(
-            'correo_cho',
-            'Correo',
-            'required',//|is_unique[usuarios.correo]
-            array(
-                'required' => 'Este campo es requerido.',
-            )
-        );
-        $this->form_validation->set_rules(
-            'contrasenia_cho',
-            'Contraseña',
-            'required',
-            array(
-                'required' => 'Este campo es requerido.',
-            )
-        );
+        
+      
         $this->form_validation->set_rules(
             'nombres_cho',
             'Nombres',
@@ -86,22 +78,8 @@ class choferes_controller extends CI_Controller
                 'required' => 'Este campo es requerido.',
             )
         );
-        $this->form_validation->set_rules(
-            'estado_cho',
-            'Estado',
-            'required',
-            array(
-                'required' => 'Este campo es requerido.',
-            )
-        );
-        $this->form_validation->set_rules(
-            'cedula_cho',
-            'Cedula',
-            'required',//|is_unique[usuarios.cedula_usu]
-            array(
-                'required' => 'Este campo es requerido.',
-            )
-        );
+    
+        
         $this->form_validation->set_rules(
             'telefono_cho',
             'Telefono',
@@ -115,23 +93,8 @@ class choferes_controller extends CI_Controller
     }
     public function reglasValidacion()
     {
-        $this->form_validation->set_rules(
-            'correo_cho',
-            'Correo',
-            'required|is_unique[chofer.correo_cho]|is_unique[usuarios.correo]',//|is_unique[usuarios.correo]
-            array(
-                'required' => 'Este campo es requerido.',
-                'is_unique' => 'El correo ya esta registrado como socio o chofer.'
-            )
-        );
-        $this->form_validation->set_rules(
-            'contrasenia_cho',
-            'Contraseña',
-            'required',
-            array(
-                'required' => 'Este campo es requerido.',
-            )
-        );
+        
+       
         $this->form_validation->set_rules(
             'nombres_cho',
             'Nombres',
@@ -148,23 +111,8 @@ class choferes_controller extends CI_Controller
                 'required' => 'Este campo es requerido.',
             )
         );
-        $this->form_validation->set_rules(
-            'estado_cho',
-            'Estado',
-            'required',
-            array(
-                'required' => 'Este campo es requerido.',
-            )
-        );
-        $this->form_validation->set_rules(
-            'cedula_cho',
-            'Cedula',
-            'required|is_unique[chofer.cedula_cho]|is_unique[usuarios.cedula_usu]',//|is_unique[usuarios.cedula_usu]
-            array(
-                'required' => 'Este campo es requerido.',
-                'is_unique' => 'El numero de cedula ya esta registrado como socio o chofer.'
-            )
-        );
+      
+        
         $this->form_validation->set_rules(
             'telefono_cho',
             'Telefono',

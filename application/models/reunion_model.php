@@ -22,7 +22,8 @@ class reunion_model extends CI_Model {
         return $this->db->delete("reuniones");
     }
     public function obtenerRegistro($id_reu){
-        // $this->db->join("usuarios","notificaciones.fk_not_usu = usuarios.id_usu");
+        $this->db->join("empresas","reuniones.fk_reu_emp = empresas.id_emp");
+        //  $this->db->join("usuarios","usuario.fk_usu_emp = empresas.id_emp");
         $this->db->where("id_reu",$id_reu);
         $usuario= $this->db->get("reuniones");
         if($usuario->num_rows() > 0){

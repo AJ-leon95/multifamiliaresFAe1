@@ -90,7 +90,7 @@
                             <center>
                                 <br>
                                 <button type="submit" class="btn btn-warning">Actualizar</button>
-                                <a name="" id="" class="btn btn-danger" href="#" role="button">Cancelar</a>
+                                <a name="" id="" class="btn btn-danger" href="<?php $id_usu = $this->session->userdata("conectado")->id_usu; echo site_url("/usuarios_controller/perfil/$id_usu") ?>" role="button">Cancelar</a>
 
 
                             </center>

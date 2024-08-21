@@ -1,5 +1,5 @@
 <script>
-    $("#menu_socio").addClass("active");
+    $("#menu_clientes").addClass("active");
 </script>
 <br>
 <div class="container">
@@ -7,7 +7,7 @@
         <!-- general form elements disabled -->
         <div class="card card-warning">
             <div class="card-header">
-                <h3 class="card-title">General Elements</h3>
+                <h3 class="card-title">Nuevo Socio</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -21,7 +21,8 @@
                             <div class="col-4">
                                 <div class="mb-3">
                                     <label for="nombres" class="form-label">Nombres</label>
-                                    <input type="text" class="form-control" name="nombres" id="nombres" aria-describedby="helpId" placeholder="ingrese su nombre" />
+                                    <input value="<?php echo set_value('nombres'); ?>" type="text" class="form-control" name="nombres" id="nombres" aria-describedby="helpId" placeholder="ingrese su nombre" />
+                                    <p><?php echo form_error('nombres'); ?></p>
                                 </div>
 
                             </div>
@@ -29,14 +30,16 @@
                             <div class="col-4">
                                 <div class="mb-3">
                                     <label for="apellidos" class="form-label">Apellidos</label>
-                                    <input type="text" class="form-control" name="apellidos" id="apellidos" aria-describedby="helpId" placeholder="ingrese su apellido" />
+                                    <input value="<?php echo set_value('apellidos'); ?>" type="text" class="form-control" name="apellidos" id="apellidos" aria-describedby="helpId" placeholder="ingrese su apellido" />
+                                    <p><?php echo form_error('apellidos'); ?></p>
                                 </div>
                             </div>
 
                             <div class="col-4">
                                 <div class="mb-3">
                                     <label for="cedula_usu" class="form-label">Cedula</label>
-                                    <input type="number" class="form-control" name="cedula_usu" id="cedula_usu" aria-describedby="helpId" placeholder="ingrese su apellido" />
+                                    <input value="<?php echo set_value('cedula_usu'); ?>" type="number" class="form-control" name="cedula_usu" id="cedula_usu" aria-describedby="helpId" placeholder="ingrese su apellido" />
+                                    <p><?php echo form_error('cedula_usu'); ?></p>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +47,8 @@
                             <div class="col-4">
                                 <div class="mb-3">
                                     <label for="correo" class="form-label">Correo</label>
-                                    <input type="email" class="form-control" name="correo" id="correo" aria-describedby="helpId" placeholder="ingrese su Correo" />
+                                    <input value="<?php echo set_value('correo'); ?>" type="email" class="form-control" name="correo" id="correo" aria-describedby="helpId" placeholder="ingrese su Correo" />
+                                    <p><?php echo form_error('correo'); ?></p>
                                 </div>
 
                             </div>
@@ -52,11 +56,12 @@
                                 <div class="mb-3">
                                     <label for="contrasenia" class="form-label">Contraseña</label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" name="contrasenia" id="contrasenia" aria-describedby="helpId" placeholder="Ingrese su contraseña mínimo 8 caracteres" />
+                                        <input value="<?php echo set_value('contrasenia'); ?>" type="password" class="form-control" name="contrasenia" id="contrasenia" aria-describedby="helpId" placeholder="Ingrese su contraseña mínimo 8 caracteres" />
                                         <button type="button" class="btn btn-outline-secondary" id="togglePassword">
                                             <i class="bi bi-eye"></i>
                                         </button>
                                     </div>
+                                    <p><?php echo form_error('contrasenia'); ?></p>
                                 </div>
 
 
@@ -64,7 +69,8 @@
                             <div class="col-4">
                                 <div class="mb-3">
                                     <label for="telefono" class="form-label">telefono</label>
-                                    <input type="text" class="form-control" name="telefono" id="telefono" aria-describedby="helpId" placeholder="ingrese su numero celuular" />
+                                    <input value="<?php echo set_value('telefono'); ?>" type="text" class="form-control" name="telefono" id="telefono" aria-describedby="helpId" placeholder="ingrese su numero celuular" />
+                                    <p><?php echo form_error('telefono'); ?></p>
                                 </div>
                             </div>
 
@@ -73,8 +79,8 @@
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="direccion" class="form-label">Dirección</label>
-                                    <textarea name="direccion" id="direccion" cols="30" rows="10"></textarea>
-                                    
+                                    <textarea name="direccion" id="direccion" cols="30" rows="10"><?php echo set_value('direccion'); ?></textarea>
+                                    <p><?php echo form_error('direccion'); ?></p>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -90,7 +96,7 @@
                             <center>
                                 <br>
                                 <button type="submit" class="btn btn-warning">Guardar</button>
-                                <a name="" id="" class="btn btn-danger" href="#" role="button">Cancelar</a>
+                                <a name="" id="" class="btn btn-danger" href="<?php echo site_url("usuarios_controller/indexSocio") ?>" role="button">Cancelar</a>
 
 
                             </center>
@@ -128,65 +134,8 @@
             language: "es"
         });
 
-        $("#frmRegistroCli").validate({
-            rules: {
-                nombres: {
-                    required: true,
-                    letras: true
-                },
-                apellidos: {
-                    required: true,
-                    letras: true
-                },
-                correo: {
-                    required: true,
-                },
-                contrasenia: {
-                    required: true,
-                },
-                telefono: {
-                    required: true,
-                    number: true, // Asegura que el valor sea un número
-                    maxlength: 10, // Mensaje de error para exceder la longitud máxima
-                    minlength: 10, // Establece la longitud mínima del campo a 10 dígitos
-                    telefonoInicio: true
-                },
-
-                direccion: {
-                    required: true,
-                },
-
-            },
-            messages: {
-                nombres: {
-                    required: 'Por favor, ingrese sus nombres.',
-                    letras: 'El nombre solo admite caracteres',
-
-                },
-                apellidos: {
-                    required: 'Por favor, ingrese sus apellidos.',
-                    letras: 'El apellido solo admite caracteres',
-                },
-                correo: {
-                    required: 'Por favor, ingrese su correo.',
-
-                },
-                contrasenia: {
-                    required: 'Por favor, ingrese el número de cédula.',
-                },
-                telefono: {
-                    required: "Por favor, ingrese su número de teléfono.",
-                    number: "Por favor, ingrese solo números.", // Mensaje de error para números no válidos
-                    maxlength: "El número de teléfono debe tener como máximo 10 dígitos.", // Mensaje de error para exceder la longitud máxima
-                    minlength: "El número de teléfono debe tener al menos 10 dígitos." // Mensaje de error para longitud mínima no alcanzada
-
-                },
-                direccion: {
-                    required: 'Por favor, ingrese el número de cédula.',
-                },
-
-            }
-        });
+       
+            
     </script>
     <script>
         ClassicEditor

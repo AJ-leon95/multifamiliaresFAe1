@@ -74,6 +74,16 @@ class usuario_model extends CI_Model {
         }
     
     }
+    function correosSocios(){
+        $sql="SELECT* FROM usuarios WHERE perfil IN ('presidente', 'secretario', 'gerente', 'socio');";
+        $result = $this->db->query($sql);
+        if ($result->num_rows()>0) {
+            return $result->result();
+        } else {
+            return 0;
+        }
+    
+    }
     function CambiarContraBBDD($correo,$nuevaPass){
         $sql="UPDATE usuarios
         SET contrasenia = '$nuevaPass'
@@ -85,7 +95,12 @@ class usuario_model extends CI_Model {
         $query = $this->db->get('usuarios');
         return $query->num_rows() > 0;
     }
-    
+    // confirmacion de correo
+    public function confirm_user($confirmation_code) {
+        $this->db->where('confirmation_code', $confirmation_code);
+        $this->db->update('usuarios', array('is_confirmed' => 1, 'confirmation_code' => null));
+        return $this->db->affected_rows() > 0;
+    }
 
 }
 

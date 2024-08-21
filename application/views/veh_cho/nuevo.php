@@ -1,5 +1,5 @@
 <script>
-    $("#menu_veh_cho").addClass("active");
+    $("#asignacion").addClass("active");
 </script>
 <br><?php
     date_default_timezone_set('America/Guayaquil');
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-6">
                             <div class="mb-3">
                                 <label for="fk_vc_veh" class="form-label">Vehiculos/Socio</label>
                                 <select class="form-select form-select" name="fk_vc_veh" id="fk_vc_veh">
@@ -52,7 +52,7 @@
                             </div>
 
                         </div>
-                        <div class="col-4">
+                        <div class="col-6">
                             <div class="mb-3">
                                 <label for="fk_vc_cho" class="form-label">Chofer</label>
                                 <select class="form-select form-select" name="fk_vc_cho" id="fk_vc_cho">
@@ -66,19 +66,7 @@
 
                             </div>
                         </div>
-                        <div class="col-4">
-                            <div class="mb-3">
-                                <label for="estatus_veh_cho" class="form-label">Estado</label>
-                                <select class="form-select form-select" name="estatus_veh_cho" id="estatus_veh_cho">
-                                    <option disabled selected>Seleccione una</option>
-                                    <option value="ACTIVO">ACTIVO</option>
-                                    <option value="INACTIVO">INACTIVO</option>
-                                </select>
-                                <p style="color: red;"><?php echo form_error('estatus_veh_cho') ?></p>
-
-                            </div>
-
-                        </div>
+                       
                     </div>
 
                     <center>

@@ -53,3 +53,4 @@ $route['default_controller'] = 'vista_general';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['ubicacion_vehiculo_controller/insertarVehiculoCarro'] = 'ubicacion_vehiculo_controller/insertarVehiculoCarro';
+$route['obtenerTarifa/(:num)'] = 'carerras_encomiendas_controller/obtenerTarifa/$1';

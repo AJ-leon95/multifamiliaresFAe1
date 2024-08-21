@@ -1,0 +1,36 @@
+{
+    "name": "MULTIFAMILIARES FAE",
+    "short_name": "FAE",
+    "theme_color": "#359daf",
+    "background_color": "#359DAF",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "http://localhost/multifamiliares_fae/assets/img/iconos/android-chrome-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+             "purpose": "any"
+        },
+        {
+            "src": "http://localhost/multifamiliares_fae/assets/img/iconos/android-chrome-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "http://localhost/multifamiliares_fae/assets/img/iconos/android-chrome-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "http://localhost/multifamiliares_fae/assets/img/iconos/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

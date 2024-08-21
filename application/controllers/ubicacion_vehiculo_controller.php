@@ -1,9 +1,12 @@
 <?php
+date_default_timezone_set('America/Guayaquil');
+?>
+<?php
 class Ubicacion_vehiculo_controller extends CI_Controller
 {
     public function __construct()
     {
-        parent::__construct();
+      parent::__construct();
         $this->load->model('ubicacion_vehiculo_model');
         $this->load->model('vehiculo_model');
         $this->load->library('curl');
@@ -15,7 +18,7 @@ class Ubicacion_vehiculo_controller extends CI_Controller
     {
         $usuario = $this->session->userdata("conectado");
 
-        if ($usuario && in_array($usuario->perfil, ["ADMINISTRADOR", "PRESIDENTE", "SECRETARIO", "GERENTE", "SOCIO"])) {
+        if ($usuario && in_array($usuario->perfil, ["ADMINISTRADOR", "PRESIDENTE", "SECRETARIO", "GERENTE", "SOCIO","CLIENTE"])) {
             $data["ultima_ubicacion"] = $this->ubicacion_vehiculo_model->ultimaUbicacion();
             $data["id_usu"] = $usuario->id_usu;
             $data["id_veh"] = $this->vehiculo_model->obtenerDatos();
@@ -65,6 +68,9 @@ class Ubicacion_vehiculo_controller extends CI_Controller
 
         if ($insert_result) {
             echo json_encode(["success" => "Ubicación registrada correctamente."]);
+            $this->session->set_flashdata("correcto", "Su contraseña ha sido actualizada correctamente.");
+            $this->session->set_flashdata('correcto', "Registro Creado");
+
         } else {
             echo json_encode(["error" => "Error al registrar la ubicación."]);
         }

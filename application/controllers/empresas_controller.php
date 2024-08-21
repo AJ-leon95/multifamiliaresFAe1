@@ -4,13 +4,17 @@ class empresas_controller extends CI_Controller
 
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct();  
+        $this->load->library('session');
+        if (!$this->session->userdata('conectado')) {
+            redirect('/vista_general/login'); 
+        }
         $this->load->model("empresa_model");
         // $this->load->model("empresa_model");
     }
     public function index()
     {
-        
+       
         $data["emp"] = $this->empresa_model->obtenerDatos();
         $this->load->view("administracion/header");
             $this->load->view("empresa/index", $data);

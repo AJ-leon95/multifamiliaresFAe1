@@ -75,11 +75,12 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'fae',
+	'hostname' => '6bx.h.filess.io',
+	'username' => 'fae_fatserious',
+	'password' => '2811371813dc820deaf084d146a000e9e3ff7318',
+	'database' => 'fae_fatserious',
 	'dbdriver' => 'mysqli',
+	'port' => '3307',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
